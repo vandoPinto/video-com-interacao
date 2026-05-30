@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Player Interativo</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/fullscreen.js" defer></script>
+    <script src="js/script.js" defer></script>
+    <script src="js/atividades.js" defer></script>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <div id="player-container">
+
+        <video id="video" playsinline preload="metadata">
+            <source src="./arquivos/videos/video.mp4" type="video/mp4">
+        </video>
+
+        <div id="overlay">
+
+            <div id="overlay-content">
+
+                <div id="videoTimer">
+                    00:00.000 / 00:00.000
+                </div>
+
+
+                <div class="caixa-exemplo">
+                    <div class="botao" id="opcao_1">
+                        Menos de 1 horas
+                    </div>
+                    <div class="botao" id="opcao_2">
+                        2 a 4 horas
+                    </div>
+                    <div class="botao" id="opcao_3">
+                        4 a 8 horas
+                    </div>
+                    <div class="botao" id="opcao_4">
+                        Mais de 8 horas
+                    </div>
+                </div>
+
+
+                <div class="caixa-iniciar">
+                    <div class="iniciar" id="iniciar">
+                        Iniciar
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <button id="playButton">▶</button>
+
+    </div>
+
+
+
+</body>
+
+</html>
