@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Swap</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .upload-container {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+
+        .upload-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        img {
+            max-width: 300px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+        }
+
+        #swapButton {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #loading {
+            display: none;
+            margin-top: 20px;
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Face Swap</h1>
+
+    <div class="upload-container">
+
+        <div class="upload-section">
+            <h2>Imagem do Usuário</h2>
+
+            <input type="file" id="userImage" accept="image/*">
+
+            <img id="previewUser" src="" style="display:none;">
+        </div>
+
+        <div class="upload-section">
+            <h2>Imagem Base</h2>
+
+            <img id="targetImage" src="./casa.png">
+        </div>
+
+    </div>
+
+    <button id="swapButton">
+        Realizar Troca de Rosto
+    </button>
+
+    <div id="loading">
+        Processando...
+    </div>
+
+    <hr>
+
+    <div id="resultContainer">
+
+        <h2>Resultado</h2>
+
+        <img id="resultImage" src="" style="display:none;">
+
+    </div>
+
+    <script>
+
+        function fileToBase64(file) {
+
+            return new Promise((resolve, reject) => {
+
+                const reader = new FileReader();
+
+                reader.onload = () => resolve(reader.result);
+
+                reader.onerror = reject;
+
+                reader.readAsDataURL(file);
+
+            });
+
+        }
+
+        function imageUrlToBase64(url) {
+
+            return new Promise((resolve, reject) => {
+
+                const img = new Image();
+
+                img.crossOrigin = "Anonymous";
+
+                img.onload = function () {
+
+                    const canvas = document.createElement("canvas");
+
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    const ctx = canvas.getContext("2d");
+
+                    ctx.drawImage(img, 0, 0);
+
+                    resolve(canvas.toDataURL("image/png"));
+
+                };
+
+                img.onerror = reject;
+
+                img.src = url;
+
+            });
+
+        }
+
+        $("#userImage").on("change", function () {
+
+            const file = this.files[0];
+
+            if (!file) return;
+
+            $("#previewUser")
+                .attr("src", URL.createObjectURL(file))
+                .show();
+
+        });
+
+        $("#swapButton").on("click", async function () {
+
+            try {
+
+                const file = $("#userImage")[0].files[0];
+
+                if (!file) {
+
+                    alert("Selecione a imagem do usuário.");
+
+                    return;
+                }
+
+                $("#loading").show();
+
+                const sourceImage = await fileToBase64(file);
+
+                const targetImage = await imageUrlToBase64("./casa.png");
+
+                const settings = {
+                    async: true,
+                    crossDomain: true,
+                    url: 'https://deepfake-face-swap-ai.p.rapidapi.com/target-face',
+                    method: 'POST',
+                    headers: {
+                        'x-rapidapi-key': '7ec63b0344msh7c4ab7c04a41f37p103386jsn5ecb2dc7846f',
+                        'x-rapidapi-host': 'deepfake-face-swap-ai.p.rapidapi.com',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data: {
+                        source_image: sourceImage,
+                        target_image: targetImage,
+                        face_index: '0'
+                    }
+                };
+
+                $.ajax(settings)
+
+                    .done(function (response) {
+
+                        console.log("Resposta:", response);
+
+                        $("#loading").hide();
+
+                        if (response.result_url) {
+
+                            $("#resultImage")
+                                .attr("src", response.result_url)
+                                .show();
+
+                        } else if (response.image) {
+
+                            $("#resultImage")
+                                .attr("src", response.image)
+                                .show();
+
+                        } else {
+
+                            alert("Resposta recebida, mas não encontrei a imagem.");
+
+                            console.log(response);
+                        }
+
+                    })
+
+                    .fail(function (xhr) {
+
+                        $("#loading").hide();
+
+                        console.error(xhr);
+
+                        console.log(xhr.responseText);
+
+                        alert("Erro ao processar Face Swap. Veja o console.");
+
+                    });
+
+            }
+
+            catch (erro) {
+
+                $("#loading").hide();
+
+                console.error(erro);
+
+                alert("Erro: " + erro.message);
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
