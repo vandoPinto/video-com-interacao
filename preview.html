@@ -1,105 +1,108 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teste Fullscreen + Orientação</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Fullscreen + Orientação</title>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    font-family:Arial, sans-serif;
-    background:#f5f5f5;
-}
-
-button{
-    padding:20px 40px;
-    font-size:20px;
-    cursor:pointer;
-}
-
-#status{
-    margin-top:20px;
-    font-size:18px;
-    font-weight:bold;
-}
-</style>
-</head>
-<body>
-
-<button id="btnFullscreen">
-    Entrar em Tela Cheia
-</button>
-
-<div id="status">
-    Verificando orientação...
-</div>
-
-<script>
-
-function atualizarOrientacao() {
-
-    if (window.innerHeight > window.innerWidth) {
-        $("#status").html("📱 Modo Retrato");
-    } else {
-        $("#status").html("📺 Modo Paisagem");
-    }
-
-}
-
-$("#btnFullscreen").on("click", async function() {
-
-    try {
-
-        // Entrar em fullscreen
-        if (document.documentElement.requestFullscreen) {
-            await document.documentElement.requestFullscreen();
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
         }
 
-        // Tentar bloquear em retrato
-        if (screen.orientation && screen.orientation.lock) {
+        button {
+            padding: 20px 40px;
+            font-size: 20px;
+            cursor: pointer;
+        }
 
-            try {
-                await screen.orientation.lock("portrait");
+        #status {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
 
-                $("#status").html(
-                    "✅ Fullscreen ativado<br>🔒 Orientação travada em Retrato"
-                );
+<body>
 
-            } catch(e){
+    <button id="btnFullscreen">
+        Entrar em Tela Cheia
+    </button>
 
-                $("#status").html(
-                    "✅ Fullscreen ativado<br>⚠️ Seu navegador não permite travar a orientação"
-                );
+    <div id="status">
+        Verificando orientação...
+    </div>
 
+    <script>
+
+        function atualizarOrientacao() {
+
+            if (window.innerHeight > window.innerWidth) {
+                $("#status").html("📱 Modo Retrato");
+            } else {
+                $("#status").html("📺 Modo Paisagem");
             }
 
         }
 
-    } catch(err){
+        $("#btnFullscreen").on("click", async function () {
 
-        $("#status").html(
-            "❌ Fullscreen não permitido"
-        );
+            try {
 
-    }
+                // Entrar em fullscreen
+                if (document.documentElement.requestFullscreen) {
+                    await document.documentElement.requestFullscreen();
+                }
 
-});
+                // Tentar bloquear em retrato
+                if (screen.orientation && screen.orientation.lock) {
 
-$(window).on("resize orientationchange", function(){
-    atualizarOrientacao();
-});
+                    try {
+                        await screen.orientation.lock("landscape");
 
-atualizarOrientacao();
+                        $("#status").html(
+                            "✅ Fullscreen ativado<br>🔒 Orientação travada em Retrato"
+                        );
 
-</script>
+                    } catch (e) {
+
+                        $("#status").html(
+                            "✅ Fullscreen ativado<br>⚠️ Seu navegador não permite travar a orientação"
+                        );
+
+                    }
+
+                }
+
+            } catch (err) {
+
+                $("#status").html(
+                    "❌ Fullscreen não permitido"
+                );
+
+            }
+
+        });
+
+        $(window).on("resize orientationchange", function () {
+            atualizarOrientacao();
+        });
+
+        atualizarOrientacao();
+
+    </script>
 
 </body>
+
 </html>
