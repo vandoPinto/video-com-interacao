@@ -61,7 +61,7 @@
         <div class="upload-section">
             <h2>Imagem Base</h2>
 
-            <img id="targetImage" src="./casa.png">
+            <img id="targetImage" src="./casa.jpg">
         </div>
 
     </div>
@@ -86,113 +86,63 @@
 
     <script>
 
-        function fileToBase64(file) {
-
-            return new Promise((resolve, reject) => {
-
-                const reader = new FileReader();
-
-                reader.onload = () => resolve(reader.result);
-
-                reader.onerror = reject;
-
-                reader.readAsDataURL(file);
-
-            });
-
-        }
-
-        function imageUrlToBase64(url) {
-
-            return new Promise((resolve, reject) => {
-
-                const img = new Image();
-
-                img.crossOrigin = "Anonymous";
-
-                img.onload = function () {
-
-                    const canvas = document.createElement("canvas");
-
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-
-                    const ctx = canvas.getContext("2d");
-
-                    ctx.drawImage(img, 0, 0);
-
-                    resolve(canvas.toDataURL("image/png"));
-
-                };
-
-                img.onerror = reject;
-
-                img.src = url;
-
-            });
-
-        }
-
-        $("#userImage").on("change", function () {
-
-            const file = this.files[0];
-
-            if (!file) return;
-
-            $("#previewUser")
-                .attr("src", URL.createObjectURL(file))
-                .show();
-
-        });
-
         $("#swapButton").on("click", async function () {
 
             try {
 
-                const file = $("#userImage")[0].files[0];
+                const sourceFile = $("#userImage")[0].files[0];
 
-                if (!file) {
-
+                if (!sourceFile) {
                     alert("Selecione a imagem do usuário.");
-
                     return;
                 }
 
                 $("#loading").show();
 
-                const sourceImage = await fileToBase64(file);
+                // Carrega a imagem alvo (casa.jpg)
+                const targetResponse = await fetch("./casa.jpg");
+                const targetBlob = await targetResponse.blob();
 
-                const targetImage = await imageUrlToBase64("./casa.png");
+                const form = new FormData();
+
+                form.append("source_image", sourceFile);
+                form.append("target_image", targetBlob, "casa.jpg");
+
+                form.append("source_url", "");
+                form.append("target_url", "");
+                form.append("face_index", "0");
 
                 const settings = {
                     async: true,
                     crossDomain: true,
-                    url: 'https://deepfake-face-swap-ai.p.rapidapi.com/target-face',
-                    method: 'POST',
+                    url: "https://deepfake-face-swap-ai.p.rapidapi.com/target-face",
+                    method: "POST",
                     headers: {
-                        "x-rapidapi-key": "61e1fa06b2mshf90d61b59bb60dap16cbe3jsncf71e1cd83f1",
-                        "x-rapidapi-host": "deepfake-face-swap-ai.p.rapidapi.com",
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        'x-rapidapi-key': '1c58adfb6fmsh93515ead27f4648p18b570jsnb9b1c662c703',
+                        'x-rapidapi-host': 'deepfake-face-swap-ai.p.rapidapi.com'
                     },
-                    data: {
-                        source_image: sourceImage,
-                        target_image: targetImage,
-                        face_index: '0'
-                    }
+                    processData: false,
+                    contentType: false,
+                    mimeType: "multipart/form-data",
+                    data: form
                 };
 
                 $.ajax(settings)
 
                     .done(function (response) {
 
-                        console.log("Resposta:", response);
-
                         $("#loading").hide();
 
-                        if (response.result_url) {
+                        console.log("Resposta:", response);
+
+                        try {
+                            response = JSON.parse(response);
+                        } catch (e) { }
+
+                        if (response.image_url) {
 
                             $("#resultImage")
-                                .attr("src", response.result_url)
+                                .attr("src", response.image_url)
                                 .show();
 
                         } else if (response.image) {
@@ -215,8 +165,6 @@
                         $("#loading").hide();
 
                         console.error(xhr);
-
-                        console.log(xhr.responseText);
 
                         alert("Erro ao processar Face Swap. Veja o console.");
 
@@ -241,5 +189,3 @@
 </body>
 
 </html>
-
-//https://rapidapi.com/console/11998248/applications/8828352/settings
