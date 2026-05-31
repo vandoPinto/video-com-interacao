@@ -179,10 +179,10 @@ $(() => {
             // Lista de imagens padrão
             // =========================
             const imagensBase = [
-                "../arquivos/imagens/cena1.png",
-                "../arquivos/imagens/cena2.png",
-                "../arquivos/imagens/cena3.png",
-                "../arquivos/imagens/casa.jpg"
+                "./arquivos/imagens/cena1.png",
+                "./arquivos/imagens/cena2.png",
+                "./arquivos/imagens/cena3.png",
+                "./arquivos/imagens/casa.jpg"
             ];
 
             // Se o usuário escolheu uma imagem base,
