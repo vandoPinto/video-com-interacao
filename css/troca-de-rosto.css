@@ -1,0 +1,141 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f5f7fb;
+    padding: 20px;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.upload-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+}
+
+.upload-section {
+    width: 320px;
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+}
+
+.upload-section h2 {
+    margin-top: 0;
+    font-size: 16px;
+    text-align: center;
+}
+
+img,
+video {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+input[type="file"] {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#swapButton {
+    align-self: center;
+    height: 60px;
+    min-width: 220px;
+
+    background: linear-gradient(135deg,
+            #2563eb,
+            #7c3aed);
+
+    color: white;
+    border: none;
+    border-radius: 12px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 15px rgba(37, 99, 235, .3);
+}
+
+#swapButton:hover {
+    transform: scale(1.03);
+}
+
+button {
+    align-self: center;
+    height: 60px;
+
+    background: linear-gradient(135deg,
+            #2563eb,
+            #7c3aed);
+
+    color: white;
+    border: none;
+    border-radius: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 15px rgba(37, 99, 235, .3);
+}
+
+button:hover {
+    transform: scale(1.03);
+}
+
+#loading {
+    text-align: center;
+    margin: 20px 0;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+#resultContainer {
+    margin-top: 40px;
+}
+
+#resultContainer h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#resultsGrid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+#resultsGrid img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+
+    transition: .3s;
+}
+
+#resultsGrid img:hover {
+    transform: scale(1.05);
+}
+
+hr {
+    margin: 40px 0;
+    border: none;
+    height: 1px;
+    background: #ddd;
+}

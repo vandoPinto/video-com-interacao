@@ -15,6 +15,9 @@ const BASE_HEIGHT = 1080;
 
 let loopInterval = null;
 
+let webcamFile = null;
+let stream = null;
+
 // ==========================================
 // FORMATAÇÃO DO TIMER
 // ==========================================
