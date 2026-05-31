@@ -139,3 +139,111 @@ hr {
     height: 1px;
     background: #ddd;
 }
+
+@media (max-width: 1024px) {
+
+    .upload-container {
+        flex-wrap: wrap;
+    }
+
+    .upload-section {
+        width: calc(50% - 10px);
+        min-width: 280px;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .upload-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .upload-section {
+        width: 100%;
+        max-width: 400px;
+        box-sizing: border-box;
+    }
+
+    img,
+    video {
+        height: auto;
+        min-height: 220px;
+        max-height: 350px;
+    }
+
+    #swapButton {
+        width: 100%;
+        min-width: auto;
+        height: 60px;
+        font-size: 18px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    #resultsGrid {
+        gap: 10px;
+    }
+
+    #resultsGrid img {
+        width: 100%;
+        max-width: 350px;
+        height: auto;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    body {
+        padding: 8px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .upload-section {
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    .upload-section h2 {
+        font-size: 15px;
+    }
+
+    img,
+    video {
+        min-height: 180px;
+        max-height: 250px;
+    }
+
+    #swapButton {
+        font-size: 16px;
+        height: 55px;
+    }
+
+    button {
+        font-size: 14px;
+        height: 50px;
+    }
+
+    #loading {
+        font-size: 14px;
+    }
+
+}

@@ -7,7 +7,6 @@
     <title>Face Swap</title>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
     <script src="./js/troca-de-rosto.js" defer></script>
     <script src="./js/chaveAPI.js"></script>
 
@@ -19,65 +18,40 @@
     <h1>Face Swap</h1>
 
     <div class="upload-container">
-
         <div class="upload-section">
-
             <h2>Foto pela Webcam</h2>
-
             <video id="webcam" width="300" autoplay playsinline style="border:1px solid #ccc;"></video>
-
             <canvas id="canvas" style="display:none;"></canvas>
-
             <button id="startCamera" type="button">
                 Abrir Câmera
             </button>
-
             <button id="capturePhoto" type="button">
                 Tirar Foto
             </button>
-
         </div>
 
         <div class="upload-section">
-
             <h2>Imagem do Usuário</h2>
-
             <input type="file" id="userImage" accept="image/*">
-
             <img id="previewUser" src="" style="display:none;">
-
         </div>
-
         <div class="upload-section">
-
             <h2>Imagem Base</h2>
-
             <input type="file" id="targetImageUpload" accept="image/*">
-
             <img id="targetImage" src="./arquivos/imagens/cena1.png">
-
         </div>
-
     </div>
     <button id="swapButton">
         Realizar Troca de Rosto
     </button>
-
     <div id="loading">
         Processando...
     </div>
-
-
     <hr>
-
     <div id="resultContainer">
-
         <h2>Resultado</h2>
-
         <img id="resultImage" src="" style="display:none;">
-
     </div>
-
 </body>
 
 </html>
