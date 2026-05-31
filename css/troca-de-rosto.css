@@ -32,6 +32,10 @@ h1 {
     text-align: center;
 }
 
+#webcam {
+    transform: scaleX(-1);
+}
+
 img,
 video {
     width: 100%;
